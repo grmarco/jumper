@@ -4,6 +4,4 @@ Interfaz para el algoritmo de escansión de poesía española sin silabación en
 
 ![alt text](https://github.com/grmarco/jumper/blob/master/img/captura.png)
 
-Para su ejecución:
-
-  ```python jumper_app.py```
+Está disponible para Windows y Linux en la Sección "Releases"
