@@ -6,6 +6,6 @@ Interfaz para el algoritmo de escansión de poesía española sin silabación en
 
 Para su ejecución:
 
-  pip install -r requirements.txt
+  ```pip install -r requirements.txt```
   
-  python jumper_app.py
+  ```python jumper_app.py```
