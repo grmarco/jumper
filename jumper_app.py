@@ -1,16 +1,19 @@
 from tkinter import *
 from tkinter.scrolledtext import ScrolledText
 from tkinter import filedialog
-import jumper
-import tkinterhtml
-import os
+from tkinter.ttk import Treeview
 
+import jumper
+import os
 
 class VentanaContador:
 
     def __init__(self):
-        self.dibujar()
         self.html_table = ""
+        self.cabecera = ('N','Verso', 'Etiquetado', "Sílabas", "Acentos", 'Sin extrarrítmicos', 'Tipo', 'Coincidencia')
+        self.dibujar()
+
+
 
     def dibujar(self):
         self.root = Tk()
@@ -46,7 +49,15 @@ class VentanaContador:
         group2.columnconfigure(0, weight=1)
 
         # Create the textbox
-        self.txt_destino = tkinterhtml.HtmlFrame(group2, horizontal_scrollbar="auto")
+        self.txt_destino = Treeview(group2, height=25, columns=self.cabecera, show='headings')
+        # set column headings
+        tamanios = (50, 400, 400, 80, 180, 180, 350, 100)
+        for i,col in enumerate(self.cabecera):
+            self.txt_destino.heading(col, text=col)
+            self.txt_destino.column(col, minwidth = 0, width = tamanios[i], stretch = NO)
+        self.txt_destino.tag_configure('green', foreground='green')
+        self.txt_destino.tag_configure('red', foreground='red')
+        self.txt_destino.tag_configure('black', foreground='black')
 
         self.txt_destino.grid(row=1, column=0, sticky=E + W + N + S)
         self.root.columnconfigure(0, weight=1)
@@ -74,8 +85,15 @@ class VentanaContador:
         self.statusbar = Label(self.root, text="", bd=1, relief=SUNKEN, anchor='e', justify=LEFT)
         self.statusbar.grid(row=3, column=1, columnspan=1)
 
+    def show(self,x, colores):
+        self.txt_destino.delete(*self.txt_destino.get_children())
+
+        for i, (v, v_etiquetado, v_silabas, v_acentos, v_extra, v_tipo, v_coin) in enumerate(x):
+            self.txt_destino.insert("", "end", values=(i+1, v, v_etiquetado, v_silabas, str(v_acentos), str(v_extra), v_tipo, v_coin),tags=colores[i])
+
     def put_text_in_txt_destino(self, event):
         fetched_content = self.txt_origen.get('1.0', 'end-1c')
+
         try:
             x = jumper.escandir_texto(fetched_content)
             columna_silabas_v = list(map(list, zip(*x)))[2]
@@ -83,7 +101,6 @@ class VentanaContador:
         except:
             return None
         tendencia_versal = self.trend.get().strip().strip(',').split(',')
-        cabecera = ['Verso', 'Etiquetado', "Sílabas", "Acentos", 'Sin extrarrítmicos', 'Tipo', 'Coincidencia']
         # si hay tendencia versal operamos con ella
         if tendencia_versal[0] != '' and tendencia_versal[0].find('Auto') == -1:
             tendencia_versal = [int(i) for i in tendencia_versal] if len(tendencia_versal) > 0 and self.RepresentsInt(tendencia_versal[0]) else []
@@ -94,10 +111,11 @@ class VentanaContador:
 
 
         precision = 0
+        colores = []
 
         self.html_table = '<table width="100%" style="margin: 0px;font-size: 14pt;font-family: Courier;">'
         self.html_table += '<tr>'
-        for item in cabecera:
+        for item in self.cabecera:
             self.html_table += '<th style="border-bottom-style: dashed;">' + item + '</th>'
         self.html_table += '</tr>'
 
@@ -116,7 +134,7 @@ class VentanaContador:
                     color = 'black'
                 else:
                     color = 'red'
-
+            colores.append(color)
             self.html_table += '<tr style="color:' + color + '">'
             for item in v:
                 self.html_table += '<td>' + str(item) + '</td>'
@@ -131,8 +149,8 @@ class VentanaContador:
         resumen_precision = f"Precision de los acentos:  {calidad:.1f}% Regularidad con los versos más frecuentes: {regularidad:.1f}%"
         self.statusbar['text'] = resumen_precision
 
-
-        self.txt_destino.set_content(self.html_table)
+        self.show(x,colores)
+        #self.txt_destino.set_content(self.html_table)
 
     def calcular_calidad_precision(self, analisis, versos_frecuentes):
         calidad = 0
