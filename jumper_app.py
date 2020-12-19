@@ -199,7 +199,7 @@ class VentanaContador:
                 self.html_table += '<td>' + str(item) + '</td>'
             self.html_table += '</tr>'
         self.html_table += '</table><br>'
-        self.html_table += 'Tendencia versal:'+str(tendencia_versal)
+        self.html_table += 'Tendencia versal: '+str(tendencia_versal)+'<br>'
 
         calidad, regularidad = self.calcular_calidad_precision(x, versos_frecuentes)
 
@@ -207,7 +207,7 @@ class VentanaContador:
 
         resumen_precision = f"Precisión de los acentos:  {calidad:.1f}% Regularidad con los versos más frecuentes: {regularidad:.1f}%"
         self.statusbar['text'] = resumen_precision
-
+        self.html_table += resumen_precision
         self.show(x,colores)
         #self.txt_destino.set_content(self.html_table)
 
