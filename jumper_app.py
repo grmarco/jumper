@@ -177,7 +177,7 @@ class VentanaContador:
             self.html_table += '<th style="text-align: left;">' + item + '</th>'
         self.html_table += '</tr>'
 
-        for v in x:
+        for i,v in enumerate(x):
             silabas_v = v[2]
 
             # se convierte a porcetaje
@@ -194,6 +194,7 @@ class VentanaContador:
                     color = 'red'
             colores.append(color)
             self.html_table += '<tr style="color:' + color + '">'
+            self.html_table += '<td>' + str(i) + '</td>'
             for item in v:
                 self.html_table += '<td>' + str(item) + '</td>'
             self.html_table += '</tr>'
