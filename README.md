@@ -4,11 +4,12 @@ Interfaz para el algoritmo de escansión de poesía española sin silabación en
 
 ![alt text](https://github.com/grmarco/jumper/blob/master/img/captura.png)
 
-Está disponible para Windows y Linux en la Sección "Releases"
+Está disponible para Windows y Linux en la Sección "Releases".
+
+
+Este código se enmarca dentro de las investigaciones del grupo Research Group in Natural Language Processing and Information Retrieval at UNED (Spanish Open Distance University) https://sites.google.com/view/nlp-uned/home
 
 ## Cita
-
-Este código se enmarca dentro de las investigaciones del grupo Research Group in Natural Language Processing and Information Retrieval at UNED (Spanish Open Distance University) https://sites.google.com/view/nlp-uned/home. 
 
 Remón, Guillermo Marco, y Julio Gonzalo. «Automatic Scansion of Spanish Poetry without Syllabification». arXiv:2012.12799 [cs], diciembre de 2020. arXiv.org, http://arxiv.org/abs/2012.12799.
 
